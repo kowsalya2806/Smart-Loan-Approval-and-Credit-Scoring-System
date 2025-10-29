@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Loan Status - Smart Loan Approval</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-container">
+        <div class="logo">💰 LoanSmart</div>
+        <ul class="nav-links">
+          <li><a href="/">Home</a></li>
+          <li><a href="/loans/apply">Apply Loan</a></li>
+          <li><a href="/loans/status">Loan Status</a></li>
+          <li><a href="/logout">Logout</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="container">
+      <div class="card">
+        <div style="text-align: center; margin-bottom: 3rem">
+          <div style="font-size: 3.5rem; margin-bottom: 1rem">📊</div>
+          <h2
+            style="
+              background: linear-gradient(45deg, #667eea, #764ba2, #f093fb);
+              -webkit-background-clip: text;
+              -webkit-text-fill-color: transparent;
+              background-clip: text;
+              font-weight: 800;
+              font-size: 2.2rem;
+            "
+          >
+            Your Loan Dashboard
+          </h2>
+          <p style="color: #666; margin-top: 0.5rem; font-size: 1.1rem">
+            Track all your loan applications in one place
+          </p>
+        </div>
+
+        <div th:if="${loans != null and !loans.empty}">
+          <!-- Summary cards -->
+          <div
+            style="
+              display: grid;
+              grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+              gap: 1.5rem;
+              margin-bottom: 3rem;
+            "
+          >
+            <div
+              style="
+                background: linear-gradient(45deg, #e8f5e8, #d4edda);
+                border-radius: 20px;
+                padding: 1.5rem;
+                text-align: center;
+                border-left: 4px solid #28a745;
+              "
+            >
+              <div style="font-size: 2rem; margin-bottom: 0.5rem">💰</div>
+              <div style="font-size: 1.5rem; font-weight: 800; color: #155724">
+                $125,000
+              </div>
+              <div style="font-size: 0.9rem; color: #155724; opacity: 0.8">
+                Total Applied
+              </div>
+            </div>
+            <div
+              style="
+                background: linear-gradient(45deg, #fff3e0, #ffe0b2);
+                border-radius: 20px;
+                padding: 1.5rem;
+                text-align: center;
+                border-left: 4px solid #ff9800;
+              "
+            >
+              <div style="font-size: 2rem; margin-bottom: 0.5rem">⏳</div>
+              <div style="font-size: 1.5rem; font-weight: 800; color: #e65100">
+                2
+              </div>
+              <div style="font-size: 0.9rem; color: #e65100; opacity: 0.8">
+                Pending Review
+              </div>
+            </div>
+            <div
+              style="
+                background: linear-gradient(45deg, #e3f2fd, #bbdefb);
+                border-radius: 20px;
+                padding: 1.5rem;
+                text-align: center;
+                border-left: 4px solid #2196f3;
+              "
+            >
+              <div style="font-size: 2rem; margin-bottom: 0.5rem">✅</div>
+              <div style="font-size: 1.5rem; font-weight: 800; color: #0d47a1">
+                1
+              </div>
+              <div style="font-size: 0.9rem; color: #0d47a1; opacity: 0.8">
+                Approved
+              </div>
+            </div>
+          </div>
+
+          <div class="grid">
+            <div
+              th:each="loan : ${loans}"
+              class="card"
+              style="
+                margin-bottom: 1.5rem;
+                position: relative;
+                overflow: hidden;
+              "
+            >
+              <!-- Status indicator line -->
+              <div
+                th:switch="${loan.status}"
+                style="
+                  position: absolute;
+                  top: 0;
+                  left: 0;
+                  right: 0;
+                  height: 4px;
+                "
+              >
+                <div
+                  th:case="'PENDING'"
+                  style="
+                    background: linear-gradient(90deg, #ffeaa7, #fdcb6e);
+                    height: 100%;
+                  "
+                ></div>
+                <div
+                  th:case="'APPROVED'"
+                  style="
+                    background: linear-gradient(90deg, #55efc4, #00b894);
+                    height: 100%;
+                  "
+                ></div>
+                <div
+                  th:case="'REJECTED'"
+                  style="
+                    background: linear-gradient(90deg, #fab1a0, #e17055);
+                    height: 100%;
+                  "
+                ></div>
+              </div>
+
+              <div
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                  margin-bottom: 1.5rem;
+                  margin-top: 0.5rem;
+                "
+              >
+                <h3
+                  style="
+                    color: #333;
+                    margin: 0;
+                    font-weight: 700;
+                    font-size: 1.3rem;
+                  "
+                >
+                  💵 Loan #<span th:text="${loan.id}"></span>
+                </h3>
+                <span
+                  th:class="${'status-badge status-' + loan.status.toLowerCase()}"
+                  th:text="${loan.status}"
+                ></span>
+              </div>
+
+              <div
+                class="grid"
+                style="
+                  grid-template-columns: 1fr 1fr 1fr;
+                  gap: 1.5rem;
+                  margin-bottom: 1.5rem;
+                "
+              >
+                <div
+                  style="
+                    text-align: center;
+                    padding: 1rem;
+                    background: rgba(102, 126, 234, 0.05);
+                    border-radius: 12px;
+                  "
+                >
+                  <div
+                    style="
+                      font-size: 0.8rem;
+                      color: #666;
+                      text-transform: uppercase;
+                      letter-spacing: 1px;
+                      margin-bottom: 0.5rem;
+                    "
+                  >
+                    Amount
+                  </div>
+                  <div
+                    style="color: #667eea; font-size: 1.4rem; font-weight: 800"
+                  >
+                    $<span
+                      th:text="${#numbers.formatDecimal(loan.amount, 0, 'COMMA', 2, 'POINT')}"
+                    ></span>
+                  </div>
+                </div>
+                <div
+                  style="
+                    text-align: center;
+                    padding: 1rem;
+                    background: rgba(118, 75, 162, 0.05);
+                    border-radius: 12px;
+                  "
+                >
+                  <div
+                    style="
+                      font-size: 0.8rem;
+                      color: #666;
+                      text-transform: uppercase;
+                      letter-spacing: 1px;
+                      margin-bottom: 0.5rem;
+                    "
+                  >
+                    Applied
+                  </div>
+                  <div
+                    style="color: #764ba2; font-size: 1.1rem; font-weight: 600"
+                    th:text="${#temporals.format(loan.applicationDate, 'MMM dd, yyyy')}"
+                  ></div>
+                </div>
+                <div
+                  style="
+                    text-align: center;
+                    padding: 1rem;
+                    background: rgba(240, 147, 251, 0.05);
+                    border-radius: 12px;
+                  "
+                >
+                  <div
+                    style="
+                      font-size: 0.8rem;
+                      color: #666;
+                      text-transform: uppercase;
+                      letter-spacing: 1px;
+                      margin-bottom: 0.5rem;
+                    "
+                  >
+                    Type
+                  </div>
+                  <div
+                    style="color: #f093fb; font-size: 1.1rem; font-weight: 600"
+                  >
+                    Personal
+                  </div>
+                </div>
+              </div>
+
+              <div
+                th:switch="${loan.status}"
+                style="
+                  border-radius: 15px;
+                  padding: 1.5rem;
+                  position: relative;
+                  overflow: hidden;
+                "
+              >
+                <div
+                  th:case="'PENDING'"
+                  style="
+                    background: linear-gradient(45deg, #fff8e1, #fff3c4);
+                    border-left: 4px solid #ffc107;
+                  "
+                >
+                  <div
+                    style="
+                      display: flex;
+                      align-items: center;
+                      margin-bottom: 0.5rem;
+                    "
+                  >
+                    <div style="font-size: 1.5rem; margin-right: 0.8rem">
+                      ⏳
+                    </div>
+                    <h4 style="color: #f57f17; margin: 0; font-weight: 700">
+                      Under Review
+                    </h4>
+                  </div>
+                  <p style="margin: 0; color: #f57f17; line-height: 1.5">
+                    Your application is being processed by our AI system. You'll
+                    receive an update within 24 hours via email and SMS.
+                  </p>
+                  <div
+                    style="
+                      margin-top: 1rem;
+                      padding: 0.8rem;
+                      background: rgba(255, 193, 7, 0.1);
+                      border-radius: 8px;
+                      font-size: 0.9rem;
+                      color: #f57f17;
+                    "
+                  >
+                    🔍 <strong>Next Step:</strong> Our team will verify your
+                    documents and run credit analysis.
+                  </div>
+                </div>
+                <div
+                  th:case="'APPROVED'"
+                  style="
+                    background: linear-gradient(45deg, #e8f5e8, #d4edda);
+                    border-left: 4px solid #28a745;
+                  "
+                >
+                  <div
+                    style="
+                      display: flex;
+                      align-items: center;
+                      margin-bottom: 0.5rem;
+                    "
+                  >
+                    <div style="font-size: 1.5rem; margin-right: 0.8rem">
+                      🎉
+                    </div>
+                    <h4 style="color: #155724; margin: 0; font-weight: 700">
+                      Congratulations!
+                    </h4>
+                  </div>
+                  <p style="margin: 0; color: #155724; line-height: 1.5">
+                    Your loan has been approved! Check your email for detailed
+                    terms and next steps to receive your funds.
+                  </p>
+                  <div style="margin-top: 1rem; display: flex; gap: 1rem">
+                    <button
+                      style="
+                        padding: 0.6rem 1.2rem;
+                        background: #28a745;
+                        color: white;
+                        border: none;
+                        border-radius: 8px;
+                        font-weight: 600;
+                        cursor: pointer;
+                      "
+                    >
+                      📧 View Details
+                    </button>
+                    <button
+                      style="
+                        padding: 0.6rem 1.2rem;
+                        background: transparent;
+                        color: #28a745;
+                        border: 2px solid #28a745;
+                        border-radius: 8px;
+                        font-weight: 600;
+                        cursor: pointer;
+                      "
+                    >
+                      📞 Contact Us
+                    </button>
+                  </div>
+                </div>
+                <div
+                  th:case="'REJECTED'"
+                  style="
+                    background: linear-gradient(45deg, #ffebee, #ffcdd2);
+                    border-left: 4px solid #f44336;
+                  "
+                >
+                  <div
+                    style="
+                      display: flex;
+                      align-items: center;
+                      margin-bottom: 0.5rem;
+                    "
+                  >
+                    <div style="font-size: 1.5rem; margin-right: 0.8rem">
+                      📝
+                    </div>
+                    <h4 style="color: #c62828; margin: 0; font-weight: 700">
+                      Application Update
+                    </h4>
+                  </div>
+                  <p style="margin: 0; color: #c62828; line-height: 1.5">
+                    We're unable to approve your application at this time. Our
+                    support team can help you understand the decision and
+                    explore alternatives.
+                  </p>
+                  <div style="margin-top: 1rem; display: flex; gap: 1rem">
+                    <button
+                      style="
+                        padding: 0.6rem 1.2rem;
+                        background: #f44336;
+                        color: white;
+                        border: none;
+                        border-radius: 8px;
+                        font-weight: 600;
+                        cursor: pointer;
+                      "
+                    >
+                      📞 Get Support
+                    </button>
+                    <button
+                      style="
+                        padding: 0.6rem 1.2rem;
+                        background: transparent;
+                        color: #f44336;
+                        border: 2px solid #f44336;
+                        border-radius: 8px;
+                        font-weight: 600;
+                        cursor: pointer;
+                      "
+                    >
+                      🔄 Reapply
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          th:if="${loans == null or loans.empty}"
+          style="text-align: center; padding: 4rem 2rem"
+        >
+          <div style="font-size: 4rem; margin-bottom: 1.5rem; opacity: 0.6">
+            📋
+          </div>
+          <h3
+            style="
+              color: #666;
+              margin-bottom: 1rem;
+              font-weight: 700;
+              font-size: 1.8rem;
+            "
+          >
+            No Applications Yet
+          </h3>
+          <p
+            style="
+              color: #888;
+              margin-bottom: 2.5rem;
+              font-size: 1.1rem;
+              max-width: 400px;
+              margin-left: auto;
+              margin-right: auto;
+              line-height: 1.6;
+            "
+          >
+            Ready to take the next step? Apply for your first loan and get
+            approved in minutes with our smart AI system.
+          </p>
+          <a
+            href="/loans/apply"
+            class="btn"
+            style="font-size: 1.1rem; padding: 1rem 2.5rem"
+            >🚀 Apply for Your First Loan</a
+          >
+
+          <!-- Benefits for first-time applicants -->
+          <div
+            style="
+              margin-top: 3rem;
+              display: grid;
+              grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+              gap: 1.5rem;
+              max-width: 600px;
+              margin-left: auto;
+              margin-right: auto;
+            "
+          >
+            <div
+              style="
+                text-align: center;
+                padding: 1rem;
+                background: rgba(102, 126, 234, 0.05);
+                border-radius: 15px;
+              "
+            >
+              <div style="font-size: 1.5rem; margin-bottom: 0.5rem">⚡</div>
+              <div style="font-size: 0.9rem; color: #667eea; font-weight: 600">
+                5-Min Application
+              </div>
+            </div>
+            <div
+              style="
+                text-align: center;
+                padding: 1rem;
+                background: rgba(118, 75, 162, 0.05);
+                border-radius: 15px;
+              "
+            >
+              <div style="font-size: 1.5rem; margin-bottom: 0.5rem">🧠</div>
+              <div style="font-size: 0.9rem; color: #764ba2; font-weight: 600">
+                AI-Powered
+              </div>
+            </div>
+            <div
+              style="
+                text-align: center;
+                padding: 1rem;
+                background: rgba(240, 147, 251, 0.05);
+                border-radius: 15px;
+              "
+            >
+              <div style="font-size: 1.5rem; margin-bottom: 0.5rem">💰</div>
+              <div style="font-size: 0.9rem; color: #f093fb; font-weight: 600">
+                Best Rates
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="text-align: center; margin-top: 3rem">
+        <a
+          href="/loans/apply"
+          class="btn btn-secondary"
+          style="font-size: 1.1rem; padding: 1rem 2.5rem"
+          >💵 Apply for Another Loan</a
+        >
+      </div>
+    </div>
+
+    <footer class="footer">
+      <div style="text-align: center">
+        <p>
+          &copy; 2024 Smart Loan Approval System. All rights reserved. | Secure
+          🔒 Fast ⚡ Reliable 🎯
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>

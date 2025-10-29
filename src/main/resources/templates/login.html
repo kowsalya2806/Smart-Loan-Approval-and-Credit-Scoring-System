@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - Smart Loan Approval</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-container">
+        <div class="logo">💰 LoanSmart</div>
+        <ul class="nav-links">
+          <li><a href="/">Home</a></li>
+          <li><a href="/register">Register</a></li>
+          <li><a href="/login">Login</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="container">
+      <div
+        class="card"
+        style="
+          max-width: 450px;
+          margin: 3rem auto;
+          position: relative;
+          overflow: hidden;
+        "
+      >
+        <div style="text-align: center; margin-bottom: 2.5rem">
+          <div style="font-size: 3rem; margin-bottom: 1rem">🔐</div>
+          <h2
+            style="
+              background: linear-gradient(45deg, #667eea, #764ba2, #f093fb);
+              -webkit-background-clip: text;
+              -webkit-text-fill-color: transparent;
+              background-clip: text;
+              font-weight: 800;
+              font-size: 2rem;
+            "
+          >
+            Welcome Back!
+          </h2>
+          <p style="color: #666; margin-top: 0.5rem">
+            Sign in to access your loan dashboard
+          </p>
+        </div>
+
+        <form action="/login" method="post">
+          <div class="form-group">
+            <label for="username">📧 Email Address</label>
+            <input
+              type="email"
+              id="username"
+              name="username"
+              class="form-control"
+              placeholder="Enter your email address"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="password">🔒 Password</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              class="form-control"
+              placeholder="Enter your password"
+              required
+            />
+          </div>
+
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              margin-bottom: 1.5rem;
+            "
+          >
+            <label
+              style="
+                display: flex;
+                align-items: center;
+                font-size: 0.9rem;
+                color: #666;
+              "
+            >
+              <input type="checkbox" style="margin-right: 0.5rem" /> Remember me
+            </label>
+            <a
+              href="#"
+              style="color: #667eea; text-decoration: none; font-size: 0.9rem"
+              >Forgot password?</a
+            >
+          </div>
+
+          <button
+            type="submit"
+            class="btn"
+            style="width: 100%; margin-top: 1rem; font-size: 1.1rem"
+          >
+            🚀 Sign In
+          </button>
+        </form>
+
+        <div
+          style="
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #eee;
+          "
+        >
+          <p style="color: #666">
+            New to LoanSmart?
+            <a
+              href="/register"
+              style="color: #667eea; text-decoration: none; font-weight: 600"
+              >Create an account</a
+            >
+          </p>
+        </div>
+
+        <!-- Social login options -->
+        <div style="margin-top: 1.5rem">
+          <div
+            style="
+              text-align: center;
+              margin-bottom: 1rem;
+              color: #999;
+              font-size: 0.9rem;
+            "
+          >
+            Or continue with
+          </div>
+          <div style="display: flex; gap: 1rem; justify-content: center">
+            <button
+              type="button"
+              style="
+                flex: 1;
+                padding: 0.8rem;
+                border: 2px solid #eee;
+                border-radius: 10px;
+                background: white;
+                cursor: pointer;
+                transition: all 0.3s;
+                font-weight: 600;
+              "
+            >
+              🔴 Google
+            </button>
+            <button
+              type="button"
+              style="
+                flex: 1;
+                padding: 0.8rem;
+                border: 2px solid #eee;
+                border-radius: 10px;
+                background: white;
+                cursor: pointer;
+                transition: all 0.3s;
+                font-weight: 600;
+              "
+            >
+              🔵 Facebook
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <div style="text-align: center">
+        <p>
+          &copy; 2024 Smart Loan Approval System. All rights reserved. | Secure
+          🔒 Fast ⚡ Reliable 🎯
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>

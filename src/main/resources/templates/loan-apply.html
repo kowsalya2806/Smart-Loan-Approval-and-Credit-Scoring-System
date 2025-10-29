@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apply for Loan - Smart Loan Approval</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">💰 LoanSmart</div>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/loans/apply">Apply Loan</a></li>
+                <li><a href="/loans/status">Loan Status</a></li>
+                <li><a href="/logout">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="card" style="max-width: 700px; margin: 2rem auto; position: relative; overflow: hidden;">
+            <div style="text-align: center; margin-bottom: 3rem;">
+                <div style="font-size: 3.5rem; margin-bottom: 1rem;">💰</div>
+                <h2 style="background: linear-gradient(45deg, #667eea, #764ba2, #f093fb); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-weight: 800; font-size: 2.2rem;">Apply for Your Loan</h2>
+                <p style="color: #666; margin-top: 0.5rem; font-size: 1.1rem;">Get approved in minutes with our smart AI system</p>
+            </div>
+            
+            <!-- Progress indicator -->
+            <div style="background: linear-gradient(45deg, #f8f9ff, #e8f2ff); border-radius: 15px; padding: 1.5rem; margin-bottom: 2rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                    <div style="display: flex; align-items: center; color: #667eea; font-weight: 600;">
+                        <div style="width: 30px; height: 30px; border-radius: 50%; background: #667eea; color: white; display: flex; align-items: center; justify-content: center; margin-right: 0.5rem; font-size: 0.8rem;">1</div>
+                        Application
+                    </div>
+                    <div style="flex: 1; height: 2px; background: #eee; margin: 0 1rem; position: relative;">
+                        <div style="height: 100%; width: 0%; background: #667eea; transition: width 0.3s;"></div>
+                    </div>
+                    <div style="display: flex; align-items: center; color: #ccc; font-weight: 600;">
+                        <div style="width: 30px; height: 30px; border-radius: 50%; background: #eee; color: #999; display: flex; align-items: center; justify-content: center; margin-right: 0.5rem; font-size: 0.8rem;">2</div>
+                        Review
+                    </div>
+                    <div style="flex: 1; height: 2px; background: #eee; margin: 0 1rem;"></div>
+                    <div style="display: flex; align-items: center; color: #ccc; font-weight: 600;">
+                        <div style="width: 30px; height: 30px; border-radius: 50%; background: #eee; color: #999; display: flex; align-items: center; justify-content: center; margin-right: 0.5rem; font-size: 0.8rem;">3</div>
+                        Approval
+                    </div>
+                </div>
+            </div>
+            
+            <form th:action="@{/loans/apply}" th:object="${loan}" method="post">
+                <div class="form-group">
+                    <label for="userId">🎯 User ID</label>
+                    <input type="number" id="userId" name="userId" class="form-control" placeholder="Enter your User ID" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="amount">💵 Loan Amount ($)</label>
+                    <input type="number" id="amount" th:field="*{amount}" class="form-control" 
+                           placeholder="How much do you need?" min="1000" max="1000000" step="100" required>
+                    <div style="margin-top: 0.5rem; font-size: 0.8rem; color: #666;">
+                        📊 Minimum: $1,000 | Maximum: $1,000,000
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="loanType">🏠 Loan Type</label>
+                    <select id="loanType" class="form-control" required>
+                        <option value="">Choose your loan type</option>
+                        <option value="personal">👤 Personal Loan - For personal expenses</option>
+                        <option value="business">🏢 Business Loan - Grow your business</option>
+                        <option value="education">🎓 Education Loan - Invest in your future</option>
+                        <option value="home">🏠 Home Loan - Buy your dream home</option>
+                        <option value="auto">🚗 Auto Loan - Get your perfect car</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="purpose">📝 Loan Purpose</label>
+                    <textarea id="purpose" class="form-control" rows="3" 
+                              placeholder="Tell us how you plan to use this loan (optional but helps with approval)"></textarea>
+                </div>
+                
+                <div class="grid" style="grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                    <div class="form-group">
+                        <label for="income">💰 Monthly Income ($)</label>
+                        <input type="number" id="income" class="form-control" 
+                               placeholder="Your monthly income" min="0" step="100">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="employment">💼 Employment Status</label>
+                        <select id="employment" class="form-control">
+                            <option value="">Select your status</option>
+                            <option value="employed">💼 Full-time Employed</option>
+                            <option value="self-employed">📊 Self Employed</option>
+                            <option value="unemployed">🔍 Currently Unemployed</option>
+                            <option value="student">🎓 Student</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn" style="width: 100%; margin-top: 2rem; font-size: 1.2rem; padding: 1.2rem;">
+                    🚀 Submit My Application
+                </button>
+            </form>
+            
+            <!-- Enhanced info section -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 2rem;">
+                <div style="background: linear-gradient(45deg, #e8f5e8, #d4edda); border-radius: 15px; padding: 1.5rem; border-left: 4px solid #28a745;">
+                    <h4 style="color: #155724; margin-bottom: 1rem; font-weight: 700; display: flex; align-items: center;">
+                        ⚡ <span style="margin-left: 0.5rem;">Quick Process</span>
+                    </h4>
+                    <ul style="color: #155724; margin: 0; padding-left: 1.2rem; line-height: 1.6;">
+                        <li>Instant pre-approval</li>
+                        <li>AI-powered credit analysis</li>
+                        <li>Decision within 24 hours</li>
+                    </ul>
+                </div>
+                
+                <div style="background: linear-gradient(45deg, #e3f2fd, #bbdefb); border-radius: 15px; padding: 1.5rem; border-left: 4px solid #2196f3;">
+                    <h4 style="color: #0d47a1; margin-bottom: 1rem; font-weight: 700; display: flex; align-items: center;">
+                        🛡️ <span style="margin-left: 0.5rem;">Secure & Safe</span>
+                    </h4>
+                    <ul style="color: #0d47a1; margin: 0; padding-left: 1.2rem; line-height: 1.6;">
+                        <li>256-bit SSL encryption</li>
+                        <li>Bank-level security</li>
+                        <li>Privacy protected</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Interest rates preview -->
+            <div style="background: linear-gradient(45deg, #fff3e0, #ffe0b2); border-radius: 15px; padding: 1.5rem; margin-top: 1.5rem; border-left: 4px solid #ff9800;">
+                <h4 style="color: #e65100; margin-bottom: 1rem; font-weight: 700; text-align: center;">📊 Competitive Interest Rates</h4>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 1rem; text-align: center;">
+                    <div>
+                        <div style="font-weight: 700; color: #e65100; font-size: 1.1rem;">3.5%</div>
+                        <div style="font-size: 0.8rem; color: #bf360c;">Personal</div>
+                    </div>
+                    <div>
+                        <div style="font-weight: 700; color: #e65100; font-size: 1.1rem;">4.2%</div>
+                        <div style="font-size: 0.8rem; color: #bf360c;">Business</div>
+                    </div>
+                    <div>
+                        <div style="font-weight: 700; color: #e65100; font-size: 1.1rem;">2.8%</div>
+                        <div style="font-size: 0.8rem; color: #bf360c;">Education</div>
+                    </div>
+                    <div>
+                        <div style="font-weight: 700; color: #e65100; font-size: 1.1rem;">3.1%</div>
+                        <div style="font-size: 0.8rem; color: #bf360c;">Home</div>
+                    </div>
+                    <div>
+                        <div style="font-weight: 700; color: #e65100; font-size: 1.1rem;">3.8%</div>
+                        <div style="font-size: 0.8rem; color: #bf360c;">Auto</div>
+                    </div>
+                </div>
+                <div style="text-align: center; margin-top: 0.5rem; font-size: 0.8rem; color: #bf360c;">*Starting rates, subject to credit approval</div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div style="text-align: center;">
+            <p>&copy; 2024 Smart Loan Approval System. All rights reserved. | Secure 🔒 Fast ⚡ Reliable 🎯</p>
+        </div>
+    </footer>
+</body>
+</html>

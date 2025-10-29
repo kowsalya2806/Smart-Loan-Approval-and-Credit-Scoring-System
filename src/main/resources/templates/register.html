@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Smart Loan Approval</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">💰 LoanSmart</div>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/register">Register</a></li>
+                <li><a href="/login">Login</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="card" style="max-width: 550px; margin: 2rem auto; position: relative; overflow: hidden;">
+            <div style="text-align: center; margin-bottom: 2.5rem;">
+                <div style="font-size: 3rem; margin-bottom: 1rem;">🎆</div>
+                <h2 style="background: linear-gradient(45deg, #667eea, #764ba2, #f093fb); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-weight: 800; font-size: 2rem;">Join LoanSmart</h2>
+                <p style="color: #666; margin-top: 0.5rem;">Start your journey to financial freedom today</p>
+            </div>
+            
+            <form th:action="@{/register}" th:object="${user}" method="post">
+                <div class="form-group">
+                    <label for="name">👤 Full Name</label>
+                    <input type="text" id="name" th:field="*{name}" class="form-control" placeholder="Enter your full name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">📧 Email Address</label>
+                    <input type="email" id="email" th:field="*{email}" class="form-control" placeholder="Enter your email address" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">🔒 Password</label>
+                    <input type="password" id="password" th:field="*{password}" class="form-control" placeholder="Create a strong password" required>
+                    <div style="margin-top: 0.5rem; font-size: 0.8rem; color: #666;">
+                        📝 Password should be at least 8 characters with numbers and symbols
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="role">🎯 Account Type</label>
+                    <select id="role" th:field="*{role}" class="form-control" required>
+                        <option value="">Select your account type</option>
+                        <option value="USER">👤 Customer - Apply for loans</option>
+                        <option value="ADMIN">👥 Admin - Manage applications</option>
+                    </select>
+                </div>
+                
+                <div style="margin: 1.5rem 0;">
+                    <label style="display: flex; align-items: flex-start; font-size: 0.9rem; color: #666; line-height: 1.4;">
+                        <input type="checkbox" style="margin-right: 0.8rem; margin-top: 0.2rem;" required>
+                        I agree to the <a href="#" style="color: #667eea; text-decoration: none;">Terms of Service</a> and <a href="#" style="color: #667eea; text-decoration: none;">Privacy Policy</a>
+                    </label>
+                </div>
+                
+                <button type="submit" class="btn" style="width: 100%; margin-top: 1rem; font-size: 1.1rem;">🚀 Create My Account</button>
+            </form>
+            
+            <div style="text-align: center; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid #eee;">
+                <p style="color: #666;">Already have an account? <a href="/login" style="color: #667eea; text-decoration: none; font-weight: 600;">Sign in here</a></p>
+            </div>
+            
+            <!-- Benefits section -->
+            <div style="background: linear-gradient(45deg, #f8f9ff, #e8f2ff); border-radius: 15px; padding: 1.5rem; margin-top: 1.5rem;">
+                <h4 style="color: #667eea; margin-bottom: 1rem; font-weight: 700; text-align: center;">✨ Why Join LoanSmart?</h4>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; font-size: 0.9rem; color: #555;">
+                    <div style="display: flex; align-items: center;">
+                        <span style="margin-right: 0.5rem;">⚡</span> Instant approvals
+                    </div>
+                    <div style="display: flex; align-items: center;">
+                        <span style="margin-right: 0.5rem;">💰</span> Best rates
+                    </div>
+                    <div style="display: flex; align-items: center;">
+                        <span style="margin-right: 0.5rem;">🛡️</span> Secure platform
+                    </div>
+                    <div style="display: flex; align-items: center;">
+                        <span style="margin-right: 0.5rem;">📞</span> 24/7 support
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div style="text-align: center;">
+            <p>&copy; 2024 Smart Loan Approval System. All rights reserved. | Secure 🔒 Fast ⚡ Reliable 🎯</p>
+        </div>
+    </footer>
+</body>
+</html>
